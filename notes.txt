@@ -1,0 +1,66 @@
+## Input:
+- Video with 30 fps for 1.5h
+    - 30fps x 60s x 60min x 1.5 = 162'000 frames to analyze
+    - Depending on compression (bitsize), it varies between ~1GB and ~ 20GB
+
+--------------------------------------------------------------------------------
+
+## Processing
+
+    ## All-encompassing / permanently
+    - Identify active players, track their coordinates
+    - Identify ball, track its coordinates
+    - Identify PointStart (Service), PointOngoing, PointLost/PointMade
+    (basically "play-time" and "no-play-time")
+    - cut away "no-play-time"
+    - Identify PointEndCoordinates (own field, enemy field, outside field)
+    - Identify Player-Ball interaction (contact)
+    - Track score (imply pressure/stress level, duration, start/mid/end of set/game)
+
+    ## Statistics / in retrospect
+        ## Player-Statistics
+            ## Service
+            - Service-PointMade
+            - Service-PointLost
+            - Service-PointOngoing
+            ## Attack
+            - Attack-Positioning
+            - Attack-Direction
+            - Attack-Speed (spike or loop)
+            - Extract +/- 3sec for review
+            - distinguish between
+                - Attack-PointMade
+                - Attack-PointLost
+                - Attack-PointOngoing
+            ## Defence
+            - Defence-Positioning (filtered, depending on enemy attacking Statistics)
+            - Soutien-Positioning
+            - Extract +/- 3sec for review
+            - distinguish between
+                - Defence-PointSaved
+                - Defence-PointLost
+
+--------------------------------------------------------------------------------
+
+## Output
+- Player-Statistics
+    - BallContact-Ratio
+    - Attack-PointMade-Ratio
+    - Attack-PointLost-Ratio
+    - Attack-PointOngoing-Ratio
+    - Defence-PointSaved-Ratio
+    - Defence-PointLost-Ratio
+    - Service-PointMade-Ratio
+    - Service-PointLost-Ratio
+    - Service-PointOngoing-Ratio
+- Field-Statistics
+    - Heatmaps on Defence (depending on enemy attacking Statistics)
+        - Player positioning on PointSaved
+        - Player positioning on PointLost
+    - Heatmaps on Attack
+        - Player positioning on Attack-PointLost (soutien made ?)
+- Overall-Statistics
+    - SideoutCount
+    - AceCount
+    - Trajectory of score throughout game
+    - Own Startposition vs Enemy Startposition (Idea: Realtime Advisor on how to rotate players/start positioning)
